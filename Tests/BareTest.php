@@ -1,11 +1,11 @@
 <?php
 
-namespace Omnifilm\Trakt\Tests;
+namespace Omnishow\Trakt\Tests;
 
-use Omnifilm\Testing\BareTestCase;
-use Omnifilm\Trakt\TraktProvider;
+use Omnishow\Testing\BareTestCase;
+use Omnishow\Trakt\TraktProvider;
 
-/** omnifilm/trakt's classes load with omnisense/omnifilm and Symfony's HTTP client contracts alone. */
+/** omnishow/trakt's classes load with omnisense/omnishow and Symfony's HTTP client contracts alone. */
 final class BareTest extends BareTestCase
 {
     protected static function entryClass(): string

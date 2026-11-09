@@ -1,7 +1,7 @@
 {
-    "name": "omnifilm/trakt",
+    "name": "omnishow/trakt",
     "type": "library",
-    "description": "Omnifilm's Trakt, under any PHP host: search, a film's or a show's record and its people, a work or an episode by its Trakt, IMDb, TMDB or TheTVDB number, a season's episodes, through Trakt's public API with an application's client id (no user signed in).",
+    "description": "Omnishow's Trakt, under any PHP host: search, a film's or a show's record and its people, a work or an episode by its Trakt, IMDb, TMDB or TheTVDB number, a season's episodes, through Trakt's public API with an application's client id (no user signed in).",
     "keywords": [
         "trakt",
         "film",
@@ -10,9 +10,9 @@
         "series",
         "episode",
         "framework-agnostic",
-        "omnifilm"
+        "omnishow"
     ],
-    "homepage": "https://github.com/glitchr-omnisense/omnifilm-trakt",
+    "homepage": "https://github.com/glitchr-omnisense/omnishow-trakt",
     "license": "MIT",
     "authors": [
         {
@@ -22,7 +22,7 @@
     ],
     "require": {
         "php": ">=8.2",
-        "omnisense/omnifilm": "^1.0@dev",
+        "omnisense/omnishow": "^1.0@dev",
         "symfony/http-client": "^6.4|^7.0|^8.0"
     },
     "require-dev": {
@@ -31,7 +31,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Omnifilm\\Trakt\\": ""
+            "Omnishow\\Trakt\\": ""
         },
         "exclude-from-classmap": [
             "/Tests/"
@@ -39,7 +39,7 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "Omnifilm\\Trakt\\Tests\\": "Tests/"
+            "Omnishow\\Trakt\\Tests\\": "Tests/"
         }
     },
     "extra": {

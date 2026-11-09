@@ -1,6 +1,6 @@
-# omnifilm/trakt
+# omnishow/trakt
 
-Trakt for [omnisense/omnifilm](https://github.com/glitchr-omnisense/omnifilm), through Trakt's
+Trakt for [omnisense/omnishow](https://github.com/glitchr-omnisense/omnishow), through Trakt's
 public API (`https://api.trakt.tv`) with an application's client id, no user signed in: search, a
 film's or a show's record and its people, a work or an episode by its Trakt, IMDb, TMDB or TheTVDB
 number, a season's episodes. The provider calls:
@@ -15,16 +15,16 @@ number, a season's episodes. The provider calls:
 
 Every request sends `trakt-api-version: 2`, `trakt-api-key: <client id>`, `Content-Type:
 application/json` and the configured User-Agent. Trakt serves no pictures: its records carry the
-TMDB and TheTVDB numbers that lead to them (`Registry::work()` with omnifilm/tmdb). No client taking
+TMDB and TheTVDB numbers that lead to them (`Registry::work()` with omnishow/tmdb). No client taking
 the application's HTTP client without a framework was found to reuse.
 
 ## Installation
 
 ```sh
-composer require omnifilm/trakt
+composer require omnishow/trakt
 ```
 
-Requires PHP 8.2, `omnisense/omnifilm` (1.x) and `symfony/http-client` (6.4, 7 or 8).
+Requires PHP 8.2, `omnisense/omnishow` (1.x) and `symfony/http-client` (6.4, 7 or 8).
 
 ## Credentials
 
@@ -89,9 +89,9 @@ list), season and number, page `https://trakt.tv/shows/<slug>/seasons/<n>/episod
 
 require __DIR__.'/vendor/autoload.php';
 
-use Omnifilm\Model\Role;
-use Omnifilm\Model\WorkRef;
-use Omnifilm\Trakt\TraktFactory;
+use Omnishow\Model\Role;
+use Omnishow\Model\WorkRef;
+use Omnishow\Trakt\TraktFactory;
 use Symfony\Component\HttpClient\HttpClient;
 
 $trakt = (new TraktFactory(HttpClient::create()))->create([
@@ -130,11 +130,11 @@ In Symfony:
 
 ```yaml
 services:
-    Omnifilm\Trakt\TraktFactory:
+    Omnishow\Trakt\TraktFactory:
         arguments: ['@http_client']
-    Omnifilm\Registry:
+    Omnishow\Registry:
         arguments:
-            $factories: ['@Omnifilm\Trakt\TraktFactory']
+            $factories: ['@Omnishow\Trakt\TraktFactory']
             $config:
                 trakt: { factory: trakt, options: { client_id: '%env(TRAKT_CLIENT_ID)%', user_agent: 'MySite/1.0 (+https://example.org)' } }
 ```

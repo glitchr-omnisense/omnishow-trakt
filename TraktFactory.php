@@ -1,11 +1,11 @@
 <?php
 
-namespace Omnifilm\Trakt;
+namespace Omnishow\Trakt;
 
-use Omnifilm\Config;
-use Omnifilm\Http\JsonClient;
-use Omnifilm\ProviderFactory;
-use Omnifilm\ProviderInterface;
+use Omnishow\Config;
+use Omnishow\Http\JsonClient;
+use Omnishow\ProviderFactory;
+use Omnishow\ProviderInterface;
 use Symfony\Component\HttpClient\HttpClient;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 
@@ -23,9 +23,9 @@ final class TraktFactory extends ProviderFactory
     protected function populate(Config $c): void
     {
         $c->defaults([
-            'omnifilm.factory_name' => 'trakt',
-            'omnifilm.factory_title' => 'Trakt',
-            'omnifilm.required_options' => ['client_id', 'user_agent'],
+            'omnishow.factory_name' => 'trakt',
+            'omnishow.factory_title' => 'Trakt',
+            'omnishow.required_options' => ['client_id', 'user_agent'],
             'api' => 'https://api.trakt.tv',
             'cast' => 20,
         ]);

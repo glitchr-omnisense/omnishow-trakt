@@ -1,18 +1,18 @@
 <?php
 
-namespace Omnifilm\Trakt\Tests;
+namespace Omnishow\Trakt\Tests;
 
-use Omnifilm\Exception\InvalidConfigException;
-use Omnifilm\Exception\ProviderException;
-use Omnifilm\Model\Credit;
-use Omnifilm\Model\Query;
-use Omnifilm\Model\Role;
-use Omnifilm\Model\Work;
-use Omnifilm\Model\WorkRef;
-use Omnifilm\Model\WorkType;
-use Omnifilm\Testing\RecordedHttpClient;
-use Omnifilm\Trakt\TraktFactory;
-use Omnifilm\Trakt\TraktProvider;
+use Omnishow\Exception\InvalidConfigException;
+use Omnishow\Exception\ProviderException;
+use Omnishow\Model\Credit;
+use Omnishow\Model\Query;
+use Omnishow\Model\Role;
+use Omnishow\Model\Work;
+use Omnishow\Model\WorkRef;
+use Omnishow\Model\WorkType;
+use Omnishow\Testing\RecordedHttpClient;
+use Omnishow\Trakt\TraktFactory;
+use Omnishow\Trakt\TraktProvider;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -22,7 +22,7 @@ use PHPUnit\Framework\TestCase;
  */
 final class TraktProviderTest extends TestCase
 {
-    private const OPTIONS = ['client_id' => 'not-a-real-trakt-client-id', 'user_agent' => 'omnifilm-tests/1.0 (+https://github.com/glitchr-omnisense/omnifilm)'];
+    private const OPTIONS = ['client_id' => 'not-a-real-trakt-client-id', 'user_agent' => 'omnishow-tests/1.0 (+https://github.com/glitchr-omnisense/omnishow)'];
 
     public function testASearchWithTheApplicationsHeaders(): void
     {

@@ -1,24 +1,24 @@
 <?php
 
-namespace Omnifilm\Trakt;
+namespace Omnishow\Trakt;
 
-use Omnifilm\Capabilities;
-use Omnifilm\EpisodesInterface;
-use Omnifilm\Exception\NotSupportedException;
-use Omnifilm\Http\Data;
-use Omnifilm\Http\JsonClient;
-use Omnifilm\LookupInterface;
-use Omnifilm\Model\Credit;
-use Omnifilm\Model\Identifiers;
-use Omnifilm\Model\Query;
-use Omnifilm\Model\Rating;
-use Omnifilm\Model\Role;
-use Omnifilm\Model\Scheme;
-use Omnifilm\Model\Work;
-use Omnifilm\Model\WorkRef;
-use Omnifilm\Model\WorkType;
-use Omnifilm\ProviderInterface;
-use Omnifilm\SearchInterface;
+use Omnishow\Capabilities;
+use Omnishow\EpisodesInterface;
+use Omnishow\Exception\NotSupportedException;
+use Omnishow\Http\Data;
+use Omnishow\Http\JsonClient;
+use Omnishow\LookupInterface;
+use Omnishow\Model\Credit;
+use Omnishow\Model\Identifiers;
+use Omnishow\Model\Query;
+use Omnishow\Model\Rating;
+use Omnishow\Model\Role;
+use Omnishow\Model\Scheme;
+use Omnishow\Model\Work;
+use Omnishow\Model\WorkRef;
+use Omnishow\Model\WorkType;
+use Omnishow\ProviderInterface;
+use Omnishow\SearchInterface;
 
 /**
  * Trakt's public API with an application's client id (no user signed in):
