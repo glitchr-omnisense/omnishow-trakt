@@ -160,8 +160,23 @@ the package's requirements alone.
 Not verified: no client id was used; nothing was called on Trakt. Its reference did not render for
 a re-reading on 2026-10-24 (README).
 
+## Usage policy
+
+The package declares Trakt's usage policy as data, in [policy.json](../policy.json)
+(omnisense/contracts' schema, read at its sources on 2026-11-10): rate limits 500 GET calls every 5
+minutes per client ID and IP, declared as 100 a minute (the schema has no 5-minute window);
+commercial and non-commercial use free under the API use policy, no fixed cache duration, no
+redistribution as a feed or dataset, the credit "[App name] uses Trakt but is not endorsed or
+certified by Trakt" on an About or credits page, a User-Agent naming the application and its
+version. Through omnishow's registry every call is held to it: the 101st call of a minute is refused
+before it reaches Trakt, a 429 and its `Retry-After` hold every next call until the wait is over
+(`UsageLimitReachedException`), and a site may tighten the policy in its configuration (`'policy' =>
+[...]`), never loosen it. What the terms do not say is declared unknown; the sources and the details
+are in the file's `provenance`.
+
 ## Responsibility
 
 An independent, unofficial client, affiliated with Trakt in no way. Whoever runs it keeps the
-limits of Trakt's [API reference](https://trakt.docs.apiary.io) (1,000 GET calls every 5 minutes
-per application, as documented) and its [terms](https://trakt.tv/terms): see the README.
+limits of Trakt's API use policy (500 GET calls every 5 minutes per client ID and IP, as its
+developer guides said on 2026-11-10; the deprecated [API reference](https://trakt.docs.apiary.io)
+said 1,000) and its [terms](https://trakt.tv/terms): see the README and policy.json.

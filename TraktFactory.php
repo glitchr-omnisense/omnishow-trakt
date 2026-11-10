@@ -38,6 +38,6 @@ final class TraktFactory extends ProviderFactory
             'trakt-api-version' => '2',
             'trakt-api-key' => (string) $c->string('client_id'),
             'User-Agent' => (string) $c->string('user_agent'),
-        ]), rtrim((string) $c->string('api'), '/'), $c->int('cast', 20));
+        ], $c->backoff()), rtrim((string) $c->string('api'), '/'), $c->int('cast', 20));
     }
 }

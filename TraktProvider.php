@@ -2,6 +2,8 @@
 
 namespace Omnishow\Trakt;
 
+use Omnisense\Contracts\Policy\DeclaresUsagePolicyInterface;
+use Omnisense\Contracts\Policy\UsagePolicy;
 use Omnishow\Capabilities;
 use Omnishow\EpisodesInterface;
 use Omnishow\Exception\NotSupportedException;
@@ -27,8 +29,13 @@ use Omnishow\SearchInterface;
  * episodes. Trakt serves no pictures: its records carry the TMDB and
  * TheTVDB numbers that lead to them.
  */
-final class TraktProvider implements ProviderInterface, SearchInterface, LookupInterface, EpisodesInterface
+final class TraktProvider implements ProviderInterface, SearchInterface, LookupInterface, EpisodesInterface, DeclaresUsagePolicyInterface
 {
+    /** Trakt's usage policy, as its terms read on the day it says (provenance.verifiedAt). */
+    public const POLICY = __DIR__.'/policy.json';
+
+    private static ?UsagePolicy $policy = null;
+
     private const CREW = ['directing' => Role::Director, 'writing' => Role::Writer, 'production' => Role::Producer, 'sound' => Role::Composer];
 
     public function __construct(private readonly JsonClient $json, private readonly string $api = 'https://api.trakt.tv', private readonly int $cast = 20)
@@ -45,6 +52,11 @@ final class TraktProvider implements ProviderInterface, SearchInterface, LookupI
         return 'Trakt';
     }
 
+    public function usagePolicy(): UsagePolicy
+    {
+        return self::$policy ??= UsagePolicy::fromFile(self::POLICY);
+    }
+
     public function capabilities(): Capabilities
     {
         $all = [Scheme::Trakt, Scheme::Imdb, Scheme::Tmdb, Scheme::Tvdb];
@@ -58,6 +70,7 @@ final class TraktProvider implements ProviderInterface, SearchInterface, LookupI
             credits: true,
             attribution: 'Data from Trakt (trakt.tv)',
             terms: ['https://trakt.docs.apiary.io', 'https://trakt.tv/terms'],
+            policy: $this->usagePolicy(),
         );
     }
 
