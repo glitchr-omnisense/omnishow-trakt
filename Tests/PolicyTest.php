@@ -30,7 +30,8 @@ final class PolicyTest extends TestCase
         self::assertSame('trakt', $policy->provider);
         self::assertSame('2026-11-10', $policy->provenance->verifiedAt);
         self::assertFileExists(TraktProvider::POLICY);
-        self::assertSame(['100/minute/application/*'], array_map(static fn ($l) => $l->id(), $policy->rateLimits ?? []));
+        self::assertSame(['500/5minute/application/*'], array_map(static fn ($l) => $l->id(), $policy->rateLimits ?? []));
+        self::assertSame(300, ($policy->rateLimits ?? [])[0]->seconds(), '500 every 5 minutes, not 100 a minute');
         self::assertSame(Permission::Allowed, $policy->rights->commercial);
         self::assertSame(Permission::Forbidden, $policy->rights->redistribution);
         self::assertTrue($policy->requirements->acceptsUserAgent('omnishow-tests/1.0'));
@@ -60,6 +61,27 @@ final class PolicyTest extends TestCase
         self::assertCount($made, $http->requests, 'the refused call reached nothing');
     }
 
+    public function testAFiveMinuteWindowHoldsTheCallOverItForMoreThanAMinute(): void
+    {
+        $http = RecordedHttpClient::routes([]);
+        $registry = new Registry([new TraktFactory($http)], ['films' => ['factory' => 'trakt', 'options' => self::OPTIONS, 'policy' => ['rateLimits' => [['max' => 1, 'window' => 'minute', 'every' => 5, 'operations' => ['work']]]]]]);
+
+        try {
+            $registry->lookup('films')->work(WorkRef::trakt(1));
+        } catch (UsageLimitReachedException $e) {
+            throw $e;
+        } catch (OmnishowException) {
+            // Nothing recorded: counted all the same.
+        }
+        try {
+            $registry->lookup('films')->work(WorkRef::trakt(1));
+            self::fail('The call over the 5-minute limit was made.');
+        } catch (UsageLimitReachedException $e) {
+            self::assertGreaterThan(60, $e->retryAfter, 'the window is 5 minutes long');
+            self::assertLessThanOrEqual(300, $e->retryAfter);
+        }
+    }
+
     public function testA429AndItsRetryAfterHoldEveryCallUntilTheWaitIsOver(): void
     {
         $http = RecordedHttpClient::routes(['~.~' => [429, '{"error":"too many requests"}', ['retry-after' => ['120']]]]);
@@ -83,10 +105,10 @@ final class PolicyTest extends TestCase
 
     public function testASiteCannotLoosenThePolicy(): void
     {
-        $registry = new Registry([new TraktFactory(RecordedHttpClient::routes([]))], ['films' => ['factory' => 'trakt', 'options' => self::OPTIONS, 'policy' => ['rateLimits' => [['max' => 500, 'window' => 'minute']]]]]);
+        $registry = new Registry([new TraktFactory(RecordedHttpClient::routes([]))], ['films' => ['factory' => 'trakt', 'options' => self::OPTIONS, 'policy' => ['rateLimits' => [['max' => 600, 'window' => 'minute', 'every' => 5]]]]]);
 
         $this->expectException(InvalidPolicyException::class);
-        $this->expectExceptionMessage('100 a minute');
+        $this->expectExceptionMessage('500 every 5 minutes');
         $registry->lookup('films');
     }
 }

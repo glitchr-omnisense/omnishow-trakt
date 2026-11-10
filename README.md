@@ -40,11 +40,10 @@ the usage policy below declares.
 
 The package declares Trakt's usage policy as data, in [policy.json](policy.json)
 (omnisense/contracts' schema, read at its sources on 2026-11-10): rate limits 500 GET calls every 5
-minutes per client ID and IP, declared as 100 a minute (the schema has no 5-minute window);
-commercial and non-commercial use free under the API use policy, no fixed cache duration, no
+minutes per client ID and IP (a window of 5 minutes, `"every": 5`); commercial and non-commercial use free under the API use policy, no fixed cache duration, no
 redistribution as a feed or dataset, the credit "[App name] uses Trakt but is not endorsed or
 certified by Trakt" on an About or credits page, a User-Agent naming the application and its
-version. Through omnishow's registry every call is held to it: the 101st call of a minute is refused
+version. Through omnishow's registry every call is held to it: the 501st call of 5 minutes is refused
 before it reaches Trakt, a 429 and its `Retry-After` hold every next call until the wait is over
 (`UsageLimitReachedException`), and a site may tighten the policy in its configuration (`'policy' =>
 [...]`), never loosen it. What the terms do not say is declared unknown; the sources and the details

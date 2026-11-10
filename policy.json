@@ -3,11 +3,12 @@
     "provider": "trakt",
     "rateLimits": [
         {
-            "max": 100,
+            "max": 500,
             "window": "minute",
+            "every": 5,
             "scope": "application",
             "operations": [],
-            "note": "Trakt allows 500 GET calls every 5 minutes per client ID and public IP for unauthenticated calls (UNAUTHED_API_GET_LIMIT; 500 per 5 minutes per user when authenticated): written as 100 a minute, the schema having no 5-minute window. Writes (1 a second per user) are not made by this provider. The X-Ratelimit header (Trakt's JSON) is not read; a 429's Retry-After is."
+            "note": "Trakt allows 500 GET calls every 5 minutes per client ID and public IP for unauthenticated calls (UNAUTHED_API_GET_LIMIT; 500 per 5 minutes per user when authenticated). Writes (1 a second per user) are not made by this provider. The X-Ratelimit header (Trakt's JSON) is not read; a 429's Retry-After is."
         }
     ],
     "rights": {
