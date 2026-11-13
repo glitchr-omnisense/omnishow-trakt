@@ -20,6 +20,18 @@ Every request sends `trakt-api-version: 2`, `trakt-api-key` and the User-Agent.
 Written on Symfony's HTTP client contracts, like the family: no client known that takes the
 application's client without a framework.
 
+## Install
+
+```sh
+composer require omnishow/trakt
+```
+
+It requires `omnisense/omnishow` `^1.0`, installed with it. A real call needs: **a Trakt API
+application** (its client id). With no account, its tests run on recorded answers (a
+`MockHttpClient`), and
+[omnisense/omnishow](https://github.com/glitchr-omnisense/omnishow#install-and-a-first-call)'s
+README has a first call that runs without one.
+
 ## Trakt's terms
 
 Trakt's [API reference](https://trakt.docs.apiary.io) documented a limit of 1,000 GET calls every 5
